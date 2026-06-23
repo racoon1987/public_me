@@ -10,7 +10,7 @@ API này cập nhật vị trí dừng (break point) của người dùng khi xe
 Domain: https://soft.vnptmedia.vn/
 
 ```
-PUT /api/v1/contents/{contentId}/break-point
+PUT /service/api/v1/contents/{contentId}/break-point
 ```
 
 ---
@@ -34,7 +34,7 @@ PUT /api/v1/contents/{contentId}/break-point
 
 ### Ví Dụ Request
 ```bash
-curl -X PUT https://soft.vnptmedia.vn/api/v1/contents/123123123/break-point \
+curl -X PUT https://soft.vnptmedia.vn/service/api/v1/contents/123123123/break-point \
   -H "Content-Type: application/json" \
   -d '{
     "type_id": "1",

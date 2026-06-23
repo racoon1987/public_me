@@ -11,7 +11,7 @@ Domain: https://soft.vnptmedia.vn/
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
-| **URL** | `/api/v1/contents/{contentId}/add-my-list` |
+| **URL** | `/service/api/v1/contents/{contentId}/add-my-list` |
 | **Method** | `POST` |
 | **Tính chất** | Tạo mới / Cập nhật hành động với nội dung |
 | **Authentication** | Có (yêu cầu member_id) |
@@ -127,7 +127,7 @@ CREATE TABLE PROFILE_CONTENT_FAVOURITE (
 
 **Request:**
 ```bash
-POST /api/v1/contents/content123/add-my-list
+POST /service/api/v1/contents/content123/add-my-list
 Content-Type: application/json
 
 {
