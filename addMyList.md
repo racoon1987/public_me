@@ -1,6 +1,7 @@
 # API Documentation: Add My List (Xem Sau)
 
 ## Tổng Quan
+
 API này cho phép người dùng quản lý danh sách "Xem sau" (My List) của nội dung. Hỗ trợ các hành động: thêm, xóa, hoặc cập nhật trạng thái yêu thích của nội dung.
 
 ---
@@ -9,20 +10,20 @@ API này cho phép người dùng quản lý danh sách "Xem sau" (My List) củ
 
 Domain: https://soft.vnptmedia.vn/
 
-| Thuộc tính | Chi tiết |
-|-----------|---------|
-| **URL** | `/service/api/v1/contents/{contentId}/add-my-list` |
-| **Method** | `POST` |
-| **Tính chất** | Tạo mới / Cập nhật hành động với nội dung |
-| **Authentication** | Có (yêu cầu member_id) |
+| Thuộc tính         | Chi tiết                                           |
+| ------------------ | -------------------------------------------------- |
+| **URL**            | `/service/api/v1/contents/{contentId}/add-my-list` |
+| **Method**         | `POST`                                             |
+| **Tính chất**      | Tạo mới / Cập nhật hành động với nội dung          |
+| **Authentication** | Có (yêu cầu member_id)                             |
 
 ---
 
 ## 2. Path Parameters
 
-| Tham số | Kiểu | Bắt buộc | Mô tả |
-|---------|------|---------|-------|
-| **contentId** | String | ✓ | ID định danh của nội dung |
+| Tham số       | Kiểu   | Bắt buộc | Mô tả                     |
+| ------------- | ------ | -------- | ------------------------- |
+| **contentId** | String | ✓        | ID định danh của nội dung |
 
 ---
 
@@ -44,13 +45,13 @@ Domain: https://soft.vnptmedia.vn/
 
 ### Chi tiết các trường
 
-| Trường | Kiểu | Bắt buộc | Mô tả | Ví dụ |
-|--------|------|---------|-------|-------|
-| **type_id** | String | ✓ | Loại nội dung (2=Film, 5=TV Show) | `"2"` |
-| **member_id** | String | ✓ | ID thành viên / tài khoản | `"12345"` |
-| **profile_id** | String | Tùy chọn | ID profile trong tài khoản | `"profile_001"` |
-| **series** | Integer | Tùy chọn | Số tập (mặc định: 0) | `1` |
-| **action** | Integer | Tùy chọn | Hành động:<br>• `1` = Yêu thích (Favorite)<br>• `2` = Xem sau (My List)<br>(mặc định: 0) | `2` |
+| Trường         | Kiểu    | Bắt buộc | Mô tả                                                                                    | Ví dụ           |
+| -------------- | ------- | -------- | ---------------------------------------------------------------------------------------- | --------------- |
+| **type_id**    | String  | ✓        | Loại nội dung (2=Film, 5=TV Show)                                                        | `"2"`           |
+| **member_id**  | String  | ✓        | ID thành viên / tài khoản                                                                | `"12345"`       |
+| **profile_id** | String  | Tùy chọn | ID profile trong tài khoản                                                               | `"profile_001"` |
+| **series**     | Integer | Tùy chọn | Số tập (mặc định: 0)                                                                     | `1`             |
+| **action**     | Integer | Tùy chọn | Hành động:<br>• `1` = Yêu thích (Favorite)<br>• `2` = Xem sau (My List)<br>(mặc định: 0) | `2`             |
 
 ---
 
@@ -60,30 +61,30 @@ Domain: https://soft.vnptmedia.vn/
 
 ```json
 {
-	"success": true,
-	"message": "Thành công",
-	"data": {
-			"type": 3
-	}
+  "success": true,
+  "message": "Thành công",
+  "data": {
+    "type": 3
+  }
 }
 ```
 
 ### Response Data - Giải thích `type` field
 
-| Giá trị | Ý nghĩa | Hành động đã thực hiện |
-|--------|--------|----------------------|
-| **1** | DELETE | Xóa record khỏi My List |
-| **2** | UPDATE | Cập nhật hành động (thay đổi action) |
-| **3** | INSERT | Thêm mới vào My List |
-| **0** | ERROR | Lỗi trong quá trình xử lý |
+| Giá trị | Ý nghĩa | Hành động đã thực hiện               |
+| ------- | ------- | ------------------------------------ |
+| **1**   | DELETE  | Xóa record khỏi My List              |
+| **2**   | UPDATE  | Cập nhật hành động (thay đổi action) |
+| **3**   | INSERT  | Thêm mới vào My List                 |
+| **0**   | ERROR   | Lỗi trong quá trình xử lý            |
 
 ### Error Response
 
 ```json
 {
-	"success": false,
-	"message": "System error: Params required: type_id",
-	"data": null
+  "success": false,
+  "message": "System error: Params required: type_id",
+  "data": null
 }
 ```
 
@@ -106,6 +107,7 @@ CREATE TABLE PROFILE_CONTENT_FAVOURITE (
 ```
 
 **Logic:**
+
 - `ACTION = 1`: Nội dung yêu thích
 - `ACTION = 2`: Nội dung trong danh sách "Xem sau"
 - Khi add-my-list với cùng `action` → DELETE (toggle off)
@@ -118,6 +120,7 @@ CREATE TABLE PROFILE_CONTENT_FAVOURITE (
 ### Ví dụ 1: Thêm nội dung vào "Xem sau"
 
 **Request:**
+
 ```bash
 POST /service/api/v1/contents/content123/add-my-list
 Content-Type: application/json
@@ -132,15 +135,17 @@ Content-Type: application/json
 ```
 
 **Response (Lần đầu tiên):**
+
 ```json
 {
-	"success": true,
-	"message": "Thành công",
-	"data": {
-			"type": 3
-	}
+  "success": true,
+  "message": "Thành công",
+  "data": {
+    "type": 3
+  }
 }
 ```
+
 → **Kết quả:** Record mới được INSERT vào PROFILE_CONTENT_FAVOURITE với ACTION=2
 
 ---
@@ -160,15 +165,17 @@ Content-Type: application/json
 ```
 
 **Response (Lần thứ 2):**
+
 ```json
 {
-	"success": true,
-	"message": "Thành công",
-	"data": {
-			"type": 1
-	}
+  "success": true,
+  "message": "Thành công",
+  "data": {
+    "type": 1
+  }
 }
 ```
+
 → **Kết quả:** Record bị DELETE (Toggle OFF). Nội dung xóa khỏi "Xem sau"
 
 ---
@@ -176,6 +183,7 @@ Content-Type: application/json
 ### Ví dụ 3: Thay đổi từ "Xem sau" thành "Yêu thích"
 
 **Request:**
+
 ```json
 {
   "type_id": "2",
@@ -187,13 +195,15 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
-	"success": true,
-	"message": "Thành công",
-	"data": {
-			"type": 2
-	}
+  "success": true,
+  "message": "Thành công",
+  "data": {
+    "type": 2
+  }
 }
 ```
+
 → **Kết quả:** Record UPDATE, ACTION thay đổi từ 2 → 1
