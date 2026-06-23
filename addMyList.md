@@ -60,11 +60,11 @@ Domain: https://soft.vnptmedia.vn/
 
 ```json
 {
-  "code": "00",
-  "msg": "Success",
-  "data": {
-    "type": 3
-  }
+	"success": true,
+	"message": "Thành công",
+	"data": {
+			"type": 3
+	}
 }
 ```
 
@@ -81,19 +81,11 @@ Domain: https://soft.vnptmedia.vn/
 
 ```json
 {
-  "code": "E001",
-  "msg": "Params required: type_id",
-  "data": null
+	"success": false,
+	"message": "System error: Params required: type_id",
+	"data": null
 }
 ```
-
-#### Các lỗi có thể xảy ra
-
-| Lỗi | Nguyên nhân | HTTP Status |
-|-----|-----------|------------|
-| `Params required: type_id` | Thiếu type_id | 200 |
-| `Params required: member_id` | Thiếu member_id | 200 |
-| Exception during database operation | Lỗi database hoặc transaction | 200 (với error response) |
 
 ---
 
@@ -142,11 +134,11 @@ Content-Type: application/json
 **Response (Lần đầu tiên):**
 ```json
 {
-  "code": "00",
-  "msg": "Success",
-  "data": {
-    "type": 3
-  }
+	"success": true,
+	"message": "Thành công",
+	"data": {
+			"type": 3
+	}
 }
 ```
 → **Kết quả:** Record mới được INSERT vào PROFILE_CONTENT_FAVOURITE với ACTION=2
@@ -170,11 +162,11 @@ Content-Type: application/json
 **Response (Lần thứ 2):**
 ```json
 {
-  "code": "00",
-  "msg": "Success",
-  "data": {
-    "type": 1
-  }
+	"success": true,
+	"message": "Thành công",
+	"data": {
+			"type": 1
+	}
 }
 ```
 → **Kết quả:** Record bị DELETE (Toggle OFF). Nội dung xóa khỏi "Xem sau"
@@ -197,11 +189,11 @@ Content-Type: application/json
 **Response:**
 ```json
 {
-  "code": "00",
-  "msg": "Success",
-  "data": {
-    "type": 2
-  }
+	"success": true,
+	"message": "Thành công",
+	"data": {
+			"type": 2
+	}
 }
 ```
 → **Kết quả:** Record UPDATE, ACTION thay đổi từ 2 → 1

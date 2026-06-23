@@ -26,9 +26,10 @@ PUT /service/api/v1/contents/{contentId}/break-point
 ```json
 {
   "type_id": "string",      // Kiểu nội dung (bắt buộc)
-  "series_id": "string",    // ID loạt phim/tập (bắt buộc)
+  "series_id": "string",    // ID loạt phim/tập (mặc định = "0")
   "break_point": "integer", // Vị trí dừng tính bằng giây (bắt buộc)
-  "member_id": "string"     // ID thành viên/người dùng (bắt buộc)
+  "member_id": "string",    // ID thành viên/người dùng (bắt buộc)
+	"profile_id": "string"		// ID profile trong tài khoản (mặc định = "0")
 }
 ```
 
@@ -47,7 +48,6 @@ curl -X PUT https://soft.vnptmedia.vn/service/api/v1/contents/123123123/break-po
 ### Validation (Kiểm Chứng)
 API sẽ trả về lỗi nếu thiếu bất kỳ tham số bắt buộc nào:
 - Nếu thiếu `type_id` → Exception: "Params required: type_id"
-- Nếu thiếu `series_id` → Exception: "Params required: series_id"  
 - Nếu thiếu `break_point` → Exception: "Params required: break_point"
 - Nếu thiếu `member_id` → Exception: "Params required: member_id"
 
@@ -58,27 +58,18 @@ API sẽ trả về lỗi nếu thiếu bất kỳ tham số bắt buộc nào:
 ### Success Response (200 OK)
 ```json
 {
-  "code": "0",
-  "message": "Success",
-  "data": {}
+	"success": true,
+	"message": "Thành công",
+	"data": {}
 }
 ```
 
-### Error Response (400 Bad Request)
+### Error Response (500 Interner server error)
 ```json
 {
-  "code": "1",
-  "message": "Params required: type_id",
-  "data": null
-}
-```
-
-### Error Response - Update Failed
-```json
-{
-  "code": "1",
-  "message": "Update Failed",
-  "data": null
+	"success": false,
+	"message": "System error: Params required: type_id",
+	"data": null
 }
 ```
 
