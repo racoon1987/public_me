@@ -82,81 +82,6 @@ API sẽ trả về lỗi nếu thiếu bất kỳ tham số bắt buộc nào:
 
 ---
 
-## Luồng Xử Lý Chi Tiết
-
-### 1. **Validation & Preparation** (ContentApi.java)
-- Kiểm tra sự tồn tại của 4 tham số bắt buộc: `type_id`, `series_id`, `break_point`, `member_id`
-- Thêm `content_id` từ path parameter vào body
-- Gọi `ContentService.updateBreakPoint(body)`
-
-### 2. **DAO Layer - Core Logic** (ContentDaoImpl.java)
-
-#### **Bước 1: Xử Lý Bảng `CONTENT_RECENT`**
-
-Mục đích: Lưu lại rằng người dùng đã xem nội dung này.
-
-- **Tìm kiếm** bản ghi hiện tại:
-  ```sql
-  SELECT RECENT_ID FROM CONTENT_RECENT 
-  WHERE CONTENT_ID = {contentId}
-    AND MEMBER_ID = {memberId}
-    AND TYPE_ID = {typeId}
-    AND PROFILE_ID = {profileId}
-  ```
-
-- **Nếu bản ghi tồn tại:**
-  - Cập nhật thời gian sửa đổi (lần cuối xem):
-    ```sql
-    UPDATE CONTENT_RECENT 
-    SET MODIFYDATE = sysdate 
-    WHERE RECENT_ID = {recentId}
-    ```
-
-- **Nếu bản ghi không tồn tại:**
-  - Tạo UUID mới
-  - Chèn bản ghi mới:
-    ```sql
-    INSERT INTO CONTENT_RECENT 
-    (RECENT_ID, CONTENT_ID, MEMBER_ID, TYPE_ID, PROFILE_ID, MODIFYDATE)
-    VALUES ({uuid}, {contentId}, {memberId}, {typeId}, {profileId}, sysdate)
-    ```
-
-#### **Bước 2: Xử Lý Bảng `CONTENT_SERIES_RECENT`**
-
-Mục đích: Lưu vị trí dừng (break point) chính xác cho loạt phim.
-
-- **Tìm kiếm** bản ghi hiện tại:
-  ```sql
-  SELECT SERIES_RECENT_ID FROM CONTENT_SERIES_RECENT
-  WHERE SERIES_ID = {seriesId}
-    AND MEMBER_ID = {memberId}
-    AND PROFILE_ID = {profileId}
-  LIMIT 1
-  ```
-
-- **Nếu bản ghi tồn tại:**
-  - Cập nhật thời gian và vị trí dừng:
-    ```sql
-    UPDATE CONTENT_SERIES_RECENT 
-    SET CREATE_DATE = sysdate, BREAK_POINT = {breakPoint}
-    WHERE SERIES_RECENT_ID = {seriesRecentId}
-    ```
-
-- **Nếu bản ghi không tồn tại:**
-  - Tạo UUID mới
-  - Chèn bản ghi mới với break point:
-    ```sql
-    INSERT INTO CONTENT_SERIES_RECENT 
-    (SERIES_RECENT_ID, SERIES_ID, CONTENT_ID, MEMBER_ID, PROFILE_ID, CREATE_DATE, BREAK_POINT)
-    VALUES ({uuid}, {seriesId}, {contentId}, {memberId}, {profileId}, sysdate, {breakPoint})
-    ```
-
-#### **Bước 3: Hoàn Tất & Trả Về**
-- Nếu cả 2 bước thành công → Return `true`
-- Nếu có exception → In ra exception, Return `false` → API trả về "Update Failed"
-
----
-
 ## Database Schema
 
 ### Bảng `CONTENT_RECENT`
@@ -182,44 +107,6 @@ Mục đích: Lưu vị trí dừng (break point) chính xác cho loạt phim.
 
 ---
 
-## Ví Dụ Thực Tế
-
-### Kịch Bản: Người dùng xem phim, dừng lại sau 20 phút
-
-**Request:**
-```bash
-PUT /api/v1/contents/movie001/break-point
-Content-Type: application/json
-
-{
-  "type_id": "1",
-  "series_id": "episode_001",
-  "break_point": 1200,
-  "member_id": "user_12345"
-}
-```
-
-**Quá trình xử lý:**
-
-1. API kiểm tra toàn bộ tham số → ✓ Hợp lệ
-2. Service gọi DAO
-3. DAO kiểm tra `CONTENT_RECENT`:
-   - **Lần đầu:** Chèn bản ghi mới với MODIFYDATE = hiện tại
-   - **Lần sau:** Cập nhật MODIFYDATE = hiện tại
-4. DAO kiểm tra `CONTENT_SERIES_RECENT`:
-   - **Lần đầu:** Chèn bản ghi mới với BREAK_POINT = 1200
-   - **Lần sau:** Cập nhật BREAK_POINT = 1200 (hoặc giá trị mới)
-5. API trả về:
-```json
-{
-  "code": "0",
-  "message": "Success",
-  "data": {}
-}
-```
-
----
-
 ## HTTP Status Codes
 
 | Status | Mô Tả |
@@ -229,7 +116,7 @@ Content-Type: application/json
 
 ---
 
-## Ghi Chú Thêm
+## Ghi Chú
 
 - **Break Point Format:** Thường tính bằng **giây** (seconds)
 - **Profile ID:** Cho phép multi-profile trên một tài khoản (ví dụ: cha/mẹ/con)
