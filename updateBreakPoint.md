@@ -112,10 +112,10 @@ API sẽ trả về lỗi nếu thiếu bất kỳ tham số bắt buộc nào:
 
 ## HTTP Status Codes
 
-| Status          | Mô Tả                              |
-| --------------- | ---------------------------------- |
-| 200 OK          | Cập nhật thành công                |
-| 400 Bad Request | Tham số bắt buộc bị thiếu hoặc lỗi |
+| Status                    | Mô Tả                              |
+| ------------------------- | ---------------------------------- |
+| 200 OK                    | Cập nhật thành công                |
+| 500 Internal server error | Tham số bắt buộc bị thiếu hoặc lỗi |
 
 ---
 
