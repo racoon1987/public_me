@@ -7,8 +7,10 @@ API này cập nhật vị trí dừng (break point) của người dùng khi xe
 
 ## Endpoint
 
+Domain: https://soft.vnptmedia.vn/
+
 ```
-PUT https://soft.vnptmedia.vn/api/v1/contents/{contentId}/break-point
+PUT /api/v1/contents/{contentId}/break-point
 ```
 
 ---
