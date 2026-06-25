@@ -130,3 +130,4 @@ Tài liệu kết hợp giữa format Interface/API Spec truyền thống và AP
 | 403 | FORBIDDEN | User không có quyền | Bạn không có quyền thực hiện chức năng này | User khác role/permission |
 | 404 | NOT_FOUND | Không tìm thấy dữ liệu | Không tìm thấy dữ liệu | Truyền feeScheduleCode không tồn tại |
 | 500 | SYSTEM_ERROR | Lỗi hệ thống | Có lỗi xảy ra, vui lòng thử lại sau | Kiểm tra hệ thống không trả stacktrace |
+a
