@@ -11,7 +11,7 @@
 - **Xác thực:** Không yêu cầu
 - **Định dạng message:** JSON
 - **URL:** `/service/api/v1/contents/{contentId}/break-point`
-- **Example URL:** `https://soft.vnptmedia.vn/service/api/v1/contents/123/break-point`
+- **Example URL:** `http://10.144.13.61/service/api/v1/contents/123/break-point`
 - **Phương thức:** PUT
 
 ---

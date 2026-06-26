@@ -11,7 +11,7 @@
 - **Xác thực:** Không yêu cầu
 - **Định dạng message:** JSON
 - **URL:** `/service/api/v1/contents/{contentId}/add-my-list`
-- **Example URL:** `https://soft.vnptmedia.vn/service/api/v1/contents/123/add-my-list`
+- **Example URL:** `http://10.144.13.61/service/api/v1/contents/123/add-my-list`
 - **Phương thức:** POST
 
 ---
