@@ -44,20 +44,20 @@ API này dùng để ghi nhận tiến độ xem của người dùng tại mộ
 | :-: | :---------- | :-------------: | :-------- | :--------------------------------------------- |
 | 1.  | contentId   |        M        | String    | ID của nội dung cần cập nhật, truyền trong URL |
 | 2.  | type_id     |        M        | String    | Loại nội dung, ví dụ: `2`, `5`                 |
-| 3.  | series_id   |        M        | String    | ID của series/tập đang được xem                |
+| 3.  | series_id   |        O        | String    | ID của series/tập đang được xem (mặc định = 0) |
 | 4.  | break_point |        M        | Integer   | Vị trí dừng, thường là thời gian xem theo giây |
 | 5.  | member_id   |        M        | String    | ID người dùng                                  |
-| 6.  | profile_id  |        O        | String    | ID profile người dùng, nếu có                  |
+| 6.  | profile_id  |        O        | String    | ID profile người dùng, nếu có (mặc định = 0)   |
 
 #### 3.3 Request Body mẫu
 
 ```json
 {
   "type_id": "2",
-  "series_id": "series_001",
+  "series_id": "0",
   "break_point": 1200,
   "member_id": "12345",
-  "profile_id": "profile_001"
+  "profile_id": "0"
 }
 ```
 
@@ -67,7 +67,7 @@ API này dùng để ghi nhận tiến độ xem của người dùng tại mộ
 | :---------- | :-------------------------- | :----------------------------- | :--------------------------- |
 | contentId   | Bắt buộc, truyền trong path | Không có message cố định       | Test bỏ trống / không truyền |
 | type_id     | Bắt buộc                    | `Params required: type_id`     | Test bỏ trống                |
-| series_id   | Bắt buộc                    | `Params required: series_id`   | Test bỏ trống                |
+| series_id   | Không Bắt buộc              |                                | Test bỏ trống                |
 | break_point | Bắt buộc                    | `Params required: break_point` | Test bỏ trống                |
 | member_id   | Bắt buộc                    | `Params required: member_id`   | Test bỏ trống                |
 | profile_id  | Không bắt buộc              | Không có                       | Test bỏ trống                |
@@ -96,9 +96,7 @@ API này dùng để ghi nhận tiến độ xem của người dùng tại mộ
 
 ### 5. Response lỗi / Error code
 
-| Status                    | Mô Tả                                            |
-| :------------------------ | :----------------------------------------------- |
-| 200 OK                    | Cập nhật break point thành công                  |
-| 500 Internal server error | Lỗi xử lý phía backend khi lưu dữ liệu           |
-
-
+| Status                    | Mô Tả                                  |
+| :------------------------ | :------------------------------------- |
+| 200 OK                    | Cập nhật break point thành công        |
+| 500 Internal server error | Lỗi xử lý phía backend khi lưu dữ liệu |
