@@ -55,7 +55,7 @@ API này dùng để quản lý nội dung mà người dùng muốn lưu vào d
 {
   "type_id": "2",
   "member_id": "12345",
-  "profile_id": "profile_001",
+  "profile_id": "0",
   "series": 0,
   "action": 2
 }
